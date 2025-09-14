@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 5000;
 
 // Admin credentials
 const ADMIN_USER = "admin";
-const ADMIN_PASS = "mypassword"; // change this in production!
+const ADMIN_PASS = "mypassword"; // ⚠️ change this in production!
 
 // Basic Auth middleware
 function auth(req, res, next) {
@@ -33,7 +33,7 @@ function auth(req, res, next) {
   }
 }
 
-// Save contact messages
+// ✅ Save contact messages (used by React site)
 app.post("/api/contact", (req, res) => {
   const { name, email, phone, message } = req.body;
   const timestamp = new Date().toISOString();
@@ -45,7 +45,7 @@ app.post("/api/contact", (req, res) => {
   });
 });
 
-// JSON endpoint for admin to fetch messages
+// ✅ Admin fetch messages (Basic Auth required)
 app.get("/api/messages", auth, (req, res) => {
   fs.readFile("messages.txt", "utf8", (err, data) => {
     if (err) return res.status(500).json({ status: "error", message: "Cannot read messages" });
@@ -58,8 +58,8 @@ app.get("/api/messages", auth, (req, res) => {
   });
 });
 
-// Serve static HTML files
+// Serve static HTML files (e.g. your admin index.html)
 app.use(express.static(path.join(__dirname)));
 
 // Start server
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
